@@ -1,4 +1,4 @@
 pwd
 terraform --version
 terraform init
-terraform apply
+terraform apply -auto-approve
