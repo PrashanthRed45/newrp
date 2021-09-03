@@ -1,0 +1,30 @@
+pipeline {
+    agent {
+  label 'l-slave1'
+}
+    stages{
+        stage('Jenkin Env'){
+          steps{
+              sh 'printenv'
+           }
+        }		   
+		stage('Build'){
+		    steps{
+			    echo "*******Build Applicaton Using Mvn*********"
+				sh '''
+				    pwd
+				    ls -l
+				    mvn clean package
+				'''
+				
+			}
+		}
+		stage('Deploy'){
+		  steps{
+		   input 'Do You Want to Deploy'
+		   deploy adapters: [tomcat9(credentialsId: '391211ca-833a-470d-bb89-630a20534826', path: '', url: 'http://18.139.116.6:8080/')], contextPath: 'test1', war: '**/*.war'
+		   }
+		}
+	}
+	
+}    
